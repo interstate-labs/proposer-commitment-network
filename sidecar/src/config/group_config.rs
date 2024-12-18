@@ -51,16 +51,16 @@ pub enum Chain {
 }
 
 impl Chain {
-    /// Get the chain name for the given chain.
-    pub fn name(&self) -> &'static str {
+    // get chain name as str
+    pub fn get_name(&self) -> &'static str {
         match self {
-            Chain::Holesky => "holesky",
-            Chain::Kurtosis => "kurtosis",
+            Chain::Holesky => "mainnet",
+            Chain::Kurtosis => "kurtosis"
         }
     }
 
-    /// Get the fork version for the given chain.
-    pub fn fork_version(&self) -> [u8; 4] {
+    // get fork version of chain 
+    pub fn get_fork_version(&self) -> [u8; 4] {
         match self {
             Chain::Holesky => [1, 1, 112, 0],
             Chain::Kurtosis => [16, 0, 0, 56],
@@ -99,7 +99,7 @@ impl ChainConfig {
     fn compute_domain_from_mask(&self, mask: [u8; 4]) -> [u8; 32] {
         let mut domain = [0; 32];
 
-        let fork_version = self.chain.fork_version();
+        let fork_version = self.chain.get_fork_version();
 
         // Note: the application builder domain specs require the genesis_validators_root
         // to be 0x00 for any out-of-protocol message. The commit-boost domain follows the
